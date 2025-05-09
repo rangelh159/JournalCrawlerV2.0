@@ -38,3 +38,17 @@ def leer_csv(directorio_areas, directorio_catalogos) -> dict:
                         if catalogo not in revistas[titulo]["catalogos"]:
                             revistas[titulo]["catalogos"].append(catalogo)
     return revistas
+
+def guardar_json(diccionario, ruta_salida):
+    with open(ruta_salida, "w", encoding='utf-8') as f:
+        json.dump(diccionario, f, indent=4, ensure_ascii=False)
+
+if __name__ == "__main__":
+    # Definir los directorios de entrada y salida
+    directorio_areas = "../datos/csv/areas"
+    directorio_catalogos = "../datos/csv/catalogos"
+    ruta_salida = "../datos/json/revistas.json"
+
+    # Leer el CSV y convertirlo a JSON
+    revistas = leer_csv(directorio_areas, directorio_catalogos)
+    guardar_json(revistas, ruta_salida)

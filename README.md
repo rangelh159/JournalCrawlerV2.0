@@ -8,7 +8,15 @@ Este proyecto permite automatizar la recopilación, organización y visualizaci�
 
 ### 1. Preprocesamiento de datos
 
-[Insertar aquÍ]
+El archivo ***csv_to_json.py*** sirve para organizar información de revistas contenida en archivos CSV y guardarla en un solo archivo JSON. Utiliza dos carpetas: una con archivos que indican a qué áreas pertenece cada revista, y otra con archivos que muestran en qué catálogos está incluida. A partir de esta información, el archivo agrupa las revistas y registra sus áreas y catálogos, guardando todo en un formato más fácil de manejar y consultar.
+
+**Para generar un archivo JSON:**
+1. Abre una terminal y navega hasta la carpeta *funciones* donde se encuentra *csv_to_json.py*
+2. Ejecuta el archivo con Python: python *csv_to_json.py*
+
+O bien, pruebe corriendo el archivo *csv_to_json.py* ubicado en la carpeta *funciones*.
+
+Al finalizar, se generará un archivo llamado revistas.json en la ruta: ../datos/json/revistas.json
 
 ### 2. Web Scraping de SCImago
 

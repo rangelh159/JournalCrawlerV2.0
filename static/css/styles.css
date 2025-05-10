@@ -1,0 +1,82 @@
+html, body {
+    height: 100%; /* Asegura que el body ocupe el 100% de la altura */
+    margin: 0; /* Elimina el margen predeterminado */
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    color: #1a3163;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/fondo.jpg'); /* Ajusta ruta según tu carpeta /static/img */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3; /* Cambia entre 0 (transparente) y 1 (opaco) */
+  z-index: -1; /* Pone la imagen detrás del contenido */
+}
+
+.navbar {
+    background-color: whitesmoke;
+    border-bottom: 4px solid #f5ba09; /* Puedes cambiar el grosor y color */
+
+}
+
+.navbar-brand,
+.nav-link {
+    color: #1a3163 !important;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    color: #f5ba09 !important;
+}
+
+.navbar-logo {
+    height: 70px;
+}
+
+.btn-primary {
+    background-color: #f5ba09;
+    border-color: #f5ba09;
+    color: #1a3163;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #e0a806;
+    border-color: #d29a05;
+}
+
+footer {
+    background-color: #1a3163; /* Color del fondo del footer */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 900;
+}
+
+.logo-unison {
+    left: 200px;  
+    height: 70px;
+  }
+

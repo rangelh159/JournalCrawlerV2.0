@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | JournalCrawler{% endblock %}
+
+{% block body %}
+<!-- detalle.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de {{ revista.titulo }}</title>
+</head>
+<body>
+    <h1>{{ revista.titulo }}</h1>
+    <p><strong>ID:</strong> {{ revista.id }}</p>
+    <p><strong>Áreas:</strong> {{ revista.areas | join(', ') }}</p>
+    <p><strong>Catálogos:</strong> {{ revista.catalogos | join(', ') }}</p>
+    <p><strong>H-Index:</strong> {{ revista.h_index or 'N/A' }}</p>
+    <p><strong>Sitio Web:</strong> <a href="{{ revista.sitio_web }}">{{ revista.sitio_web }}</a></p>
+    <p><strong>Publisher:</strong> {{ revista.publisher }}</p>
+    <p><strong>ISSN:</strong> {{ revista.issn }}</p>
+    <p><strong>Widget:</strong> {{ revista.widget | safe }}</p>
+    <p><strong>Tipo de Publicación:</strong> {{ revista.publication_type }}</p>
+</body>
+</html>
+
+{% endblock %}

@@ -1,10 +1,25 @@
 html, body {
     height: 100%; /* Asegura que el body ocupe el 100% de la altura */
     margin: 0; /* Elimina el margen predeterminado */
+    display: flex;
+    flex-direction: column; /* Coloca el contenido en columnas */
+}
+
+main.container {
+    flex: 1; /* Hace que el contenido principal ocupe el espacio disponible */
+}
+
+footer {
+    background-color: #1a3163; /* Color del fondo del footer */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative; /* Cambia a relativo para que no se superponga */
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'ZapfHumnst', sans-serif;
     background-color: #f8f9fa;
     color: #1a3163;
     display: flex;

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | JournalCrawler{% endblock %}
+
+{% block body %}
+<!-- buscar.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Revistas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Buscar Revistas</h1>
+    <form method="get" action="/buscar">
+        <input type="text" name="q" placeholder="Buscar..." value="{{ query }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <h2>Resultados</h2>
+    {% if resultados %}
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Catálogos</th>
+                <th>Áreas</th>
+                <th>H-Index</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for revista in resultados %}
+            <tr>
+                <td><a href="{{ url_for('detalle_revista', revista_id=revista.id) }}">{{ revista.titulo }}</a></td>
+                <td>{{ revista.catalogos | join(', ') }}</td>
+                <td>{{ revista.areas | join(', ') }}</td>
+                <td>{{ revista.h_index or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No se encontraron resultados para "{{ query }}".</p>
+    {% endif %}
+</body>
+
+</html>
+
+{% endblock %}

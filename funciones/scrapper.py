@@ -9,6 +9,7 @@ import random
 import re
 import urllib.parse
 
+import Levenshtein
 import requests
 from bs4 import BeautifulSoup
 
@@ -53,6 +54,21 @@ def save_output(data, path):
         json.dump(data, f, indent=4, ensure_ascii=False)
     print(f"[+] Escritos {len(data)} registros en {path}")
 
+def es_similar_levenshtein(titulo1, titulo2, umbral=0.8):
+    """
+    Compara dos títulos usando la distancia de Levenshtein.
+    Devuelve True si la similitud es mayor o igual al umbral.
+    """
+    # Calcular la similitud como 1 - (distancia / longitud máxima)
+    distancia = Levenshtein.distance(titulo1, titulo2)
+    longitud_maxima = max(len(titulo1), len(titulo2))
+    similitud = 1 - (distancia / longitud_maxima)
+    return similitud >= umbral
+
+def normalizar_titulo(titulo):
+    titulo = re.sub(r'[^a-z0-9\s]', '', titulo.lower())
+    return re.sub(r'\s+', ' ', titulo.strip())
+
 def buscar_detalle(title):
     """
     1) Hace la búsqueda por título y recorre los resultados.
@@ -86,9 +102,9 @@ def buscar_detalle(title):
         if not jrnlname_span:
             continue
 
-        resultado_titulo = jrnlname_span.get_text(strip=True).lower()
-        if resultado_titulo == title.lower():
-            # Si el título coincide, ir a la página de detalle
+        resultado_titulo = normalizar_titulo(jrnlname_span.get_text(strip=True))
+        if es_similar_levenshtein(resultado_titulo, normalizar_titulo(title)):
+            # Si el título es similar, ir a la página de detalle
             detail_url = urllib.parse.urljoin(base, a['href'])
             r2 = requests.get(detail_url, headers=HEADERS, timeout=15)
             r2.raise_for_status()
@@ -203,11 +219,16 @@ def main():
     else:
         salida = {}
 
-    # 2) Iterar solo los que faltan
+    # 2) Iterar solo los que faltan o tienen valores null
     for idx, titulo in enumerate(títulos, start=args.primero):
         if titulo in salida:
-            print(f"[{idx}] «{titulo}» ya procesado, saltando.")
-            continue
+            # Revisar si los datos son null
+            datos = salida[titulo]
+            if all(v in [None, {}, []] for k, v in datos.items() if k not in ["id", "areas", "catalogos"]):
+                print(f"[{idx}] «{titulo}» tiene valores null, reintentando.")
+            else:
+                print(f"[{idx}] «{titulo}» ya procesado, saltando.")
+                continue
 
         print(f"[{idx}] Procesando «{titulo}»…", end=' ')
         try:

@@ -31,5 +31,9 @@ def login():
             return render_template('login.html')
     return render_template('login.html')
 
+@app.route('/creditos')
+def equipo():
+    return render_template('creditos.html')
+
 if __name__ == '__main__':
     app.run(debug= True)

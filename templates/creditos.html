@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Colaboradoras del Proyecto{% endblock %}
+
+{% block body %}
+<style>
+    .card:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="text-center mb-5 text-primary fw-bold">Colaboradoras del Proyecto</h2>
+    <div class="row justify-content-center">
+
+        <!-- Mercedes -->
+        <div class="col-md-4 col-sm-6 mb-4 d-flex justify-content-center">
+            <div class="card shadow" style="width: 14rem;">
+                <img src="{{ url_for('static', filename='img/Mercedes.jpg') }}" class="card-img-top rounded-top" alt="Mercedes Peralta">
+                <div class="card-body text-center">
+                    <h6 class="card-title fw-bold">Mercedes Mariana Peralta Hurtado</h6>
+                    <p class="text-muted small mb-0">Diseñadora UX/UI</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hilary -->
+        <div class="col-md-4 col-sm-6 mb-4 d-flex justify-content-center">
+            <div class="card shadow" style="width: 14rem;">
+                <img src="{{ url_for('static', filename='img/Hilary.jpg') }}" class="card-img-top rounded-top" alt="Hilary Rangel">
+                <div class="card-body text-center">
+                    <h6 class="card-title fw-bold">Hilary del Carmen Rangel Zambrano</h6>
+                    <p class="text-muted small mb-0">Documentación y Testing</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sofía -->
+        <div class="col-md-4 col-sm-6 mb-4 d-flex justify-content-center">
+            <div class="card shadow" style="width: 14rem;">
+                <img src="{{ url_for('static', filename='img/Sofia.jpg') }}" class="card-img-top rounded-top" alt="Sofía Shoup">
+                <div class="card-body text-center">
+                    <h6 class="card-title fw-bold">Sofía Paola <br> Shoup Morales</h6>
+                    <p class="text-muted small mb-0">Programadora Backend</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

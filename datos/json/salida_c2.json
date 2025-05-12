@@ -93339,54 +93339,5 @@
         "issn": null,
         "widget": null,
         "publication_type": null
-    },
-    "vsesvit: zhurnal inozemno literatury. literaturno-mystets'ky? ta hromads'ko-politychny? misiachnyk. orhan spilky pys'mennykiv ukrany, ukrans'ko rady myru": {
-        "id": 41810,
-        "areas": [],
-        "catalogos": [
-            "SCIELO"
-        ],
-        "sitio_web": null,
-        "h_index": null,
-        "subject_area": null,
-        "publisher": null,
-        "issn": null,
-        "widget": null,
-        "publication_type": null
-    },
-    "wehrkunde: organ der gesellschaft f?r wehrkunde": {
-        "id": 41811,
-        "areas": [],
-        "catalogos": [
-            "SCIELO"
-        ],
-        "sitio_web": null,
-        "h_index": null,
-        "subject_area": null,
-        "publisher": null,
-        "issn": null,
-        "widget": null,
-        "publication_type": null
-    },
-    "weimarer beitr?ge": {
-        "id": 41812,
-        "areas": [],
-        "catalogos": [
-            "SCIELO"
-        ],
-        "sitio_web": "https://weimarer-beitraege.de/",
-        "h_index": "4",
-        "subject_area": {
-            "Arts and Humanities": [
-                "Literature and Literary Theory"
-            ],
-            "Social Sciences": [
-                "Cultural Studies"
-            ]
-        },
-        "publisher": "Passagen Verlag GmbH",
-        "issn": "00432199",
-        "widget": "<a href=\"https://www.scimagojr.com/journalsearch.php?q=16400154712&amp;tip=sid&amp;exact=no\" title=\"SCImago Journal &amp; Country Rank\"><img border=\"0\" src=\"https://www.scimagojr.com/journal_img.php?id=16400154712\" alt=\"SCImago Journal &amp; Country Rank\"  /></a>",
-        "publication_type": "Journals"
     }
 }

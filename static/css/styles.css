@@ -1,21 +1,24 @@
+/* Asegura que el body ocupe toda la altura de la ventana */
 html, body {
-    height: 100%; /* Asegura que el body ocupe el 100% de la altura */
-    margin: 0; /* Elimina el margen predeterminado */
+    height: 100%;
+    margin: 0;
     display: flex;
-    flex-direction: column; /* Coloca el contenido en columnas */
+    flex-direction: column;
 }
 
+/* El contenido principal ocupa el espacio disponible */
 main.container {
-    flex: 1; /* Hace que el contenido principal ocupe el espacio disponible */
+    flex: 1;
 }
 
+/* Footer al final del contenido */
 footer {
     background-color: #1a3163; /* Color del fondo del footer */
     color: white;
     text-align: center;
     padding: 10px 0;
     width: 100%;
-    position: relative; /* Cambia a relativo para que no se superponga */
+    position: relative; /* Cambia a relativo para que no sea fijo */
 }
 
 body {
@@ -76,22 +79,101 @@ body::before {
     border-color: #d29a05;
 }
 
-footer {
-    background-color: #1a3163; /* Color del fondo del footer */
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 h1, h2, h3, h4, h5 {
     font-weight: 900;
 }
 
-.logo-unison {
+.logo {
     left: 200px;  
     height: 70px;
   }
 
+  .logo-jc {
+    left: 200px;  
+    height: 50px;
+  }
+
+.mensaje-error {
+    color: #1a3163; /* Cambia el color del texto a rojo */
+    font-weight: bold; /* Hace el texto en negrita */
+    text-align: center; /* Centra el texto */
+    margin: 20px 0; /* Añade un margen superior e inferior */
+    background-color: #f6df9c; /* Fondo rojo claro */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #f5ba09; /* Borde rojo */
+    border-radius: 7px; /* Bordes redondeados */
+}
+
+/* Estilo para la tabla */
+.table {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #1a3163; /* Fondo oscuro */
+    color: white; /* Texto blanco */
+    text-align: center;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f5ba09; /* Color de fondo al pasar el mouse */
+    color: #1a3163; /* Color del texto al pasar el mouse */
+}
+
+.text-primary {
+    font-weight: bold;
+}
+
+.text-danger {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.card-header {
+    background: linear-gradient(90deg, #1a3163, #4a90e2);
+    color: white;
+    font-weight: bold;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+}
+
+.list-group-item {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.widget-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.list-group-item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a3163;
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f5ba09;
+    color: white;
+}
+
+#tabla-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

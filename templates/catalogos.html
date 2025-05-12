@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogos | JournalCrawler{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Catálogos Disponibles</h2>
+
+    <!-- Lista de catálogos -->
+    <div class="list-group mb-4">
+        {% for catalogo in catalogos_disponibles %}
+        <a href="{{ url_for('catalogos') }}?catalogo={{ catalogo }}" class="list-group-item list-group-item-action">
+            {{ catalogo }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Tabla de revistas -->
+    {% if revistas %}
+    <h3 class="text-center mb-4">Revistas en el Catálogo "{{ selected_catalogo }}"</h3>
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Título</th>
+                <th scope="col" class="text-center">H-Index</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for revista in revistas %}
+            <tr>
+                <td><a href="{{ url_for('detalle_revista', revista_id=revista.id) }}" class="text-decoration-none text-primary">{{ revista.titulo.strip().title() }}</a></td>
+                <td class="text-center">{{ revista.h_index or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% if selected_catalogo %}
+    <p class="text-center text-danger">No se encontraron revistas en este catálogo.</p>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

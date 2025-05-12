@@ -2,9 +2,21 @@ from flask import Flask, request, url_for, render_template, redirect, flash, ses
 import os
 import random
 import funciones.journal_classes as jc
+from funciones.levenshtein import levenshtein_distance
 
-import json
+# Diccionario para mapear códigos de áreas a nombres legibles
+AREA_MAP = {
+    "CIENCIAS_BIO": "Ciencias Biológicas",
+    "CIENCIAS_ECO": "Ciencias Económicas",
+    "CIENCIAS_EXA": "Ciencias Exactas",
+    "CIENCIAS_SOC": "Ciencias Sociales",
+    "HUMAN_Y_ART": "Humanidades y Arte",
+    "ING": "Ingeniería",
+    "MULTI": "Multidisciplinario"
+}
 
+
+#Archivo principal de la aplicación Flask
 app = Flask(__name__)
 sistema = jc.SistemaGestor() #Instancia de la clase Sistema, que es la encargada de gestionar el sistema de revistas científicas. Esta clase se encarga de cargar los datos de las revistas desde un archivo JSON y de gestionar las operaciones relacionadas con las revistas, como la búsqueda y el inicio de sesión.
 json_completo= 'datos/json/salida_b_actualizado.json' #Ruta del archivo JSON que contiene la información de las revistas científicas. Este archivo se encuentra en la carpeta datos/json/revistas.json.
@@ -16,19 +28,45 @@ def index():
     '''Páfona principal de la aplicación'''
     return render_template('index.html') ##render_template es una función de Flask que se utiliza para renderizar una plantilla HTML y devolverla al navegador. Esta función toma como argumento el nombre de la plantilla HTML que se va a renderizar y los datos que se van a pasar a la plantilla. En este caso, se está renderizando la plantilla index.html y no se están pasando datos a la plantilla.
 
+
 @app.route('/buscar', methods=['GET'])
 def buscar():
     query = request.args.get('q', '').lower()
+    orden = request.args.get('orden', 'desc')  # Por defecto, descendente
     resultados = []
 
     if query:
         for revista_id, revista in sistema.revistas.items():
+            # Calcular la distancia de Levenshtein entre la consulta y el título de la revista
+            distancia = levenshtein_distance(query, revista.titulo.lower())
+         
             if query in revista.titulo.lower() or \
-               any(query in area.lower() for area in revista.areas) or \
-               any(query in catalogo.lower() for catalogo in revista.catalogos):
-                resultados.append(revista.to_dict(2))  # Convierte el objeto a diccionario
+            distancia <= 5 or \
+            any(query in area.lower() for area in revista.areas) or \
+            any(query in catalogo.lower() for catalogo in revista.catalogos):
+                areas_traducidas = [AREA_MAP.get(area, area) for area in revista.areas]
+                resultados.append({
+                    "revista": revista.to_dict(2),
+                    "distancia": distancia,
+                    "areas_traducidas": areas_traducidas
+                })
 
-    return render_template('buscar.html', resultados=resultados, query=query)
+        # Ordenar los resultados por la distancia de Levenshtein
+        resultados.sort(key=lambda x: x["distancia"])
+
+        def parse_h_index(value):
+            try:
+                return int(value)  # Intenta convertir a entero
+            except (ValueError, TypeError):
+                return 0  # Si falla, devuelve 0 como valor predeterminado
+            
+        # Ordenar por H-Index según el orden seleccionado
+        if orden == 'asc':
+            resultados.sort(key=lambda x: parse_h_index(x["revista"].get("h_index", 0)))
+        else:  # Orden descendente por defecto
+            resultados.sort(key=lambda x:  parse_h_index(x["revista"].get("h_index", 0)), reverse=True)
+
+    return render_template('buscar.html', resultados=resultados, query=query, orden=orden)
 
 @app.route('/revista/<int:revista_id>')
 def detalle_revista(revista_id):
@@ -36,7 +74,17 @@ def detalle_revista(revista_id):
     revista = sistema.obtener_revista_por_id(revista_id)
     if not revista:
         return "Revista no encontrada", 404
-    return render_template('detalle.html', revista=revista.to_dict(2))
+    #verificar si datos scrappeados es none
+    campos_scrappeados = ['h_index', 'subject_area', 'sitio_web', 'publisher', 'issn', 'widget', 'publication_type']
+    campos_null = [campo for campo in campos_scrappeados if getattr(revista, campo, None) is None] #getattr(revista, campo, None) devuelve el valor del atributo campo de la revista. Si el atributo no existe, devuelve None. Los parametros de getattr son el objeto del que se quiere obtener el atributo, el nombre del atributo y un valor por defecto que se devuelve si el atributo no existe.
+
+    mensaje = None
+    if campos_null:
+        mensaje = "Algunos datos de esta revista no están disponibles en Scimago."
+
+    areas_traducidas = [AREA_MAP.get(area, area) for area in revista.areas]
+
+    return render_template('detalle.html', revista=revista.to_dict(2), mensaje=mensaje, areas_traducidas=areas_traducidas)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

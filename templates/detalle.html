@@ -1,28 +1,36 @@
 {% extends "base.html" %}
-
-{% block title %}Inicio | JournalCrawler{% endblock %}
-
+{% block title %}Detalles de {{ revista.titulo }}{% endblock %}
 {% block body %}
-<!-- detalle.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de {{ revista.titulo }}</title>
-</head>
 <body>
-    <h1>{{ revista.titulo }}</h1>
-    <p><strong>ID:</strong> {{ revista.id }}</p>
-    <p><strong>Áreas:</strong> {{ revista.areas | join(', ') }}</p>
-    <p><strong>Catálogos:</strong> {{ revista.catalogos | join(', ') }}</p>
-    <p><strong>H-Index:</strong> {{ revista.h_index or 'N/A' }}</p>
-    <p><strong>Sitio Web:</strong> <a href="{{ revista.sitio_web }}">{{ revista.sitio_web }}</a></p>
-    <p><strong>Publisher:</strong> {{ revista.publisher }}</p>
-    <p><strong>ISSN:</strong> {{ revista.issn }}</p>
-    <p><strong>Widget:</strong> {{ revista.widget | safe }}</p>
-    <p><strong>Tipo de Publicación:</strong> {{ revista.publication_type }}</p>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">{{ revista.titulo.strip().title() }}</h1>
+                {% if mensaje %}
+                    <p class="mensaje-error">{{ mensaje }}</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Imagen o widget de la revista -->
+                        <div class="widget-container">
+                            {{ revista.widget | safe }}
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Detalles de la revista -->
+                        <p class="card-text"><b>ID:</b> {{ revista.id }}</p>
+                        <p class="card-text"><b>Áreas:</b> {{ areas_traducidas | join(', ') }}</p>
+                        <p class="card-text"><b>Catálogos:</b> {{ revista.catalogos | join(', ') }}</p>
+                        <p class="card-text"><b>H-Index:</b> {{ revista.h_index or 'N/A' }}</p>
+                        <p class="card-text"><b>Sitio Web:</b> <a href="{{ revista.sitio_web }}" target="_blank">{{ revista.sitio_web }}</a></p>
+                        <p class="card-text"><b>Publisher:</b> {{ revista.publisher or 'No disponible' }}</p>
+                        <p class="card-text"><b>ISSN:</b> {{ revista.issn or 'No disponible' }}</p>
+                        <p class="card-text"><b>Tipo de Publicación:</b> {{ revista.publication_type or 'No disponible' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
-</html>
-
 {% endblock %}

@@ -165,10 +165,6 @@ h1, h2, h3, h4, h5 {
     cursor: pointer;
 }
 
-.list-group-item:hover {
-    background-color: #f5ba09;
-    color: white;
-}
 
 #tabla-container {
     border: 1px solid #ddd;

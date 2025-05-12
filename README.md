@@ -20,11 +20,35 @@ Al finalizar, se generará un archivo llamado revistas.json en la ruta: ../datos
 
 ### 2. Web Scraping de SCImago
 
-[Insertar aquÍ]
+El archivo ***scrapper.py*** se encarga de buscar información detallada sobre cada revista en el sitio web *scimagojr.com*, usando el archivo *revistas.json* generado en el paso anterior. Para cada revista, extrae datos como el H-index, sitio web, ISSN, widget, área temática de cada revista, entre otros.
+
+Este proceso automatizado permite actualizar la información sin necesidad de hacerlo manualmente, y guarda los resultados en un nuevo archivo JSON más completo.
+
+**Para ejecutar el scraper:**
+1. Abre una terminal y ubícate en la carpeta donde está *scrapper.py*
+2. Ejecuta: python scrapper.py -a "ruta_al_archivo_revistas.json" -p (primer titulo en número) -u (último titulo en número) -o "ruta_al_archivo_de_salida.json"
+       ****Significado de los parámetros:****
+        -a: Archivo de entrada → Ruta al archivo *revistas.json* que contiene la información base sobre las revistas (generado por el csv_to_json.py).
+        -p: Primer archivo → Índice (entero) desde donde comenzar el scraping. Por ejemplo, -p 0 inicia desde el principio.
+        -u: Último archivo → Índice (entero) desde donde terminar el scraping.
+        -o: Archivo de salida → Ruta donde se guardará el nuevo archivo JSON con la información obtenida desde SCImago, ejemplo para este caso: salida.json.
+4. Se generará un archivo llamado "salida.json" en la ruta especificada, listo para ser usado por la página web.
+
+Nota: Es necesario tener buena conexión a internet.
 
 ### 3. Interfaz gráfica
 
-[Insertar aquÍ]
+La parte visual del sistema está desarrollada con Flask y Bootstrap. Esta interfaz permite navegar fácilmente por la información de las revistas ya procesadas. Se pueden explorar revistas por:
+1. catálogo,
+2. área temática,
+3. nombre.
+
+**Para ejecutar la app:**
+1. Abre una terminal en la carpeta principal del proyecto
+2. Ejecuta: python app.py
+3. Abre un navegador y ve a [http://localhost:5000].
+
+Dentro de la interfaz navegue por las funcionalidades de la barra de navegación.
 
 ## 👩‍💻 Colaboradoras
 
@@ -36,4 +60,4 @@ Al finalizar, se generará un archivo llamado revistas.json en la ruta: ../datos
 
 ## 💡 Nota sobre el uso de inteligencia artificial
 
-Durante el desarrollo del presente proyecto, se utilizó el apoyo de un asistente virtual basado en inteligencia artificial (ChatGPT de OpenAI) para generar sugerencias de nombres, optimizar fragmentos de código, redactar textos explicativos y aclarar dudas sobre la estructura del programa. Las decisiones finales de implementación y validación fueron tomadas por las integrantes del equipo.
+Durante el desarrollo del presente proyecto, se utilizó el apoyo de un asistente virtual basado en inteligencia artificial (ChatGPT de OpenAI) para generar sugerencias de nombres, redactar textos explicativos, aclarar dudas sobre la estructura del programa y  optimizar fragmentos de código (también Copilot para estos dos últimos).

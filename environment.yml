@@ -1,8 +1,7 @@
-name: desarrollo4
+name: journalcrawler
 channels:
   - conda-forge
   - defaults
-  - anaconda
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
   - https://repo.anaconda.com/pkgs/msys2
@@ -12,8 +11,8 @@ dependencies:
   - blinker=1.9.0=py312haa95532_0
   - brotli-python=1.0.9=py312h5da7b33_9
   - bzip2=1.0.8=h2bbff1b_6
-  - ca-certificates=2025.2.25=haa95532_0
-  - certifi=2025.1.31=py312haa95532_0
+  - ca-certificates=2025.4.26=h4c7d964_0
+  - certifi=2025.4.26=pyhd8ed1ab_0
   - charset-normalizer=3.3.2=pyhd3eb1b0_0
   - click=8.1.7=py312haa95532_0
   - colorama=0.4.6=py312haa95532_0
@@ -56,7 +55,7 @@ dependencies:
   - numpy=2.0.1=py312hfd52020_1
   - numpy-base=2.0.1=py312h4dde369_1
   - openjpeg=2.5.2=hae555c5_0
-  - openssl=3.5.0=ha4e3fda_0
+  - openssl=3.5.0=ha4e3fda_1
   - packaging=24.2=py312haa95532_0
   - pillow=11.1.0=py312h096bfcc_0
   - pip=24.2=py312haa95532_0
@@ -67,6 +66,7 @@ dependencies:
   - pysocks=1.7.1=py312haa95532_0
   - python=3.12.3=h2628c8c_0_cpython
   - python-dateutil=2.9.0post0=py312haa95532_2
+  - python-levenshtein=0.27.1=pyhff2d567_0
   - python_abi=3.12=7_cp312
   - qt-main=5.15.2=h19c9488_11
   - rapidfuzz=3.12.1=py312h5da7b33_0
@@ -92,4 +92,4 @@ dependencies:
   - xz=5.4.6=h8cc25b3_1
   - zlib=1.2.13=h2466b09_6
   - zstd=1.5.6=h8880b57_0
-prefix: C:\Users\merce\miniconda3\envs\desarrollo4
+prefix: C:\Users\merce\miniconda3\envs\journalcrawler

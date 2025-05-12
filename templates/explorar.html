@@ -1,82 +1,5 @@
 {% extends "base.html" %}
 
-<<<<<<< HEAD
-{% block title %}Explorar Revistas{% endblock %}
-
-{% block body %}
-<div class="container mt-4">
-
-  <!-- Título principal -->
-  <h2 class="mb-4 text-center">Explorar Revistas</h2>
-
-  <!-- Botones del abecedario -->
-  <div class="d-flex flex-wrap justify-content-center mb-4">
-    {% for letra in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
-        <a href="{{ url_for('explorar', letra=letra) }}"
-            class="btn btn-sm {% if letra == request.args.get('letra', '') %}btn-primary{% else %}btn-outline-primary{% endif %} m-1">
-            {{ letra }}
-        </a>
-    {% endfor %}
-  </div>
-
-  <!-- Tabla de revistas -->
-  {% if revistas %}
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered">
-        <thead class="thead-dark">
-          <tr>
-            <th>Título</th>
-            <th>Catálogos</th>
-            <th>Áreas</th>
-            <th>H-Index</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for revista in revistas %}
-            <tr>
-              <!-- Título con hipervínculo -->
-              <td>
-                <a href="{{ url_for('detalle_revista', revista_id=revista.id) }}">
-                  {{ revista.titulo }}
-                </a>
-              </td>
-
-              <!-- Catálogos (usando span temporalmente) -->
-              <td>
-                  {% for catalogo in revista.catalogos %}
-                    <span>{{ catalogo.nombre }}</span>{% if not loop.last %}, {% endif %}
-                  {% endfor %}
-              </td>
-
-              <!-- Áreas (usando span temporalmente) -->
-              <td>
-                  {% for area in revista.areas %}
-                    <span>{{ area.nombre }}</span>{% if not loop.last %}, {% endif %}
-                  {% endfor %}
-              </td>
-
-              <!-- H-Index -->
-              <td>{{ revista.h_index or 'N/A' }}</td>
-
-              <!-- Botón de acción -->
-              <td>
-                <a href="{{ url_for('detalle_revista', revista_id=revista.id) }}" class="btn btn-sm btn-info">
-                  Ver detalles
-                </a>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <div class="alert alert-warning text-center" role="alert">
-      No se encontraron revistas que comiencen con la letra seleccionada.
-    </div>
-  {% endif %}
-
-=======
 {% block title %}Explorar | JournalCrawler{% endblock %}
 
 {% block body %}
@@ -121,7 +44,8 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <p class="text-center text-danger">No se encontraron revistas que inicien con "{{ letra }}".</p>
     {% endif %}
->>>>>>> 6717c04246620bb580bd60ffceb44d9b9acc915b
 </div>
 {% endblock %}

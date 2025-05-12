@@ -2,7 +2,7 @@ from flask import Flask, request, url_for, render_template, redirect, flash, ses
 import os
 import random
 import funciones.journal_classes as jc
-from funciones.levenshtein import levenshtein_distance
+import funciones.levenshtein as lev
 
 # Diccionario para mapear códigos de áreas a nombres legibles
 AREA_MAP = {
@@ -28,6 +28,61 @@ def index():
     '''Páfona principal de la aplicación'''
     return render_template('index.html') ##render_template es una función de Flask que se utiliza para renderizar una plantilla HTML y devolverla al navegador. Esta función toma como argumento el nombre de la plantilla HTML que se va a renderizar y los datos que se van a pasar a la plantilla. En este caso, se está renderizando la plantilla index.html y no se están pasando datos a la plantilla.
 
+@app.route('/area')
+def area():
+    # Obtener el área seleccionada de los parámetros de la URL
+    selected_area = request.args.get('area', None)
+
+    # Crear un diccionario con las revistas agrupadas por área
+    revistas_por_area = {}
+    for revista_id, revista in sistema.revistas.items():
+        for area in revista.areas:
+            if area not in revistas_por_area:
+                revistas_por_area[area] = []
+            revistas_por_area[area].append({
+                "id": revista.id,
+                "titulo": revista.titulo,
+                "h_index": revista.h_index
+            })
+
+    # Obtener las revistas del área seleccionada
+    revistas = revistas_por_area.get(selected_area, []) if selected_area else None
+
+    # Pasar los datos al template
+    return render_template(
+        'area.html',
+        AREA_MAP=AREA_MAP, revistas=revistas, selected_area=selected_area)
+
+@app.route('/catalogos')
+def catalogos():
+    # Obtener el catálogo seleccionado de los parámetros de la URL
+    selected_catalogo = request.args.get('catalogo', None)
+
+    # Crear un diccionario con las revistas agrupadas por catálogo
+    revistas_por_catalogo = {}
+    for revista_id, revista in sistema.revistas.items():
+        for catalogo in revista.catalogos:
+            if catalogo not in revistas_por_catalogo:
+                revistas_por_catalogo[catalogo] = []
+            revistas_por_catalogo[catalogo].append({
+                "id": revista.id,
+                "titulo": revista.titulo,
+                "h_index": revista.h_index
+            })
+
+    # Obtener las revistas del catálogo seleccionado
+    revistas = revistas_por_catalogo.get(selected_catalogo, []) if selected_catalogo else None
+
+    # Obtener la lista de catálogos disponibles
+    catalogos_disponibles = list(revistas_por_catalogo.keys())
+
+    # Pasar los datos al template
+    return render_template(
+        'catalogos.html',
+        catalogos_disponibles=catalogos_disponibles,
+        revistas=revistas,
+        selected_catalogo=selected_catalogo
+    )
 
 @app.route('/buscar', methods=['GET'])
 def buscar():
@@ -37,34 +92,42 @@ def buscar():
 
     if query:
         for revista_id, revista in sistema.revistas.items():
-            # Calcular la distancia de Levenshtein entre la consulta y el título de la revista
-            distancia = levenshtein_distance(query, revista.titulo.lower())
-         
-            if query in revista.titulo.lower() or \
-            distancia <= 5 or \
-            any(query in area.lower() for area in revista.areas) or \
-            any(query in catalogo.lower() for catalogo in revista.catalogos):
-                areas_traducidas = [AREA_MAP.get(area, area) for area in revista.areas]
-                resultados.append({
-                    "revista": revista.to_dict(2),
-                    "distancia": distancia,
-                    "areas_traducidas": areas_traducidas
-                })
+            titulo = revista.titulo.lower()
 
-        # Ordenar los resultados por la distancia de Levenshtein
-        resultados.sort(key=lambda x: x["distancia"])
+            # Coincidencia exacta de palabras clave
+            if query in titulo:
+                relevancia = 1  # Máxima relevancia para coincidencia exacta
+            # Coincidencia aproximada usando Levenshtein
+            elif lev.es_similar_levenshtein(query, titulo, umbral=0.8):
+                relevancia = 2  # Relevancia media para coincidencia aproximada
+            else:
+                continue  # Ignorar resultados irrelevantes
 
+            # Traducir las áreas
+            areas_traducidas = [AREA_MAP.get(area, area) for area in revista.areas]
+
+            # Agregar resultado con relevancia
+            resultados.append({
+                "revista": revista.to_dict(2),
+                "relevancia": relevancia,
+                "titulo": revista.titulo,
+                "areas_traducidas": areas_traducidas
+            })
+
+        # Ordenar los resultados por relevancia
+        resultados.sort(key=lambda x: x["relevancia"])
+
+        # Ordenar por H-Index según el orden seleccionado
         def parse_h_index(value):
             try:
                 return int(value)  # Intenta convertir a entero
             except (ValueError, TypeError):
                 return 0  # Si falla, devuelve 0 como valor predeterminado
-            
-        # Ordenar por H-Index según el orden seleccionado
+
         if orden == 'asc':
             resultados.sort(key=lambda x: parse_h_index(x["revista"].get("h_index", 0)))
         else:  # Orden descendente por defecto
-            resultados.sort(key=lambda x:  parse_h_index(x["revista"].get("h_index", 0)), reverse=True)
+            resultados.sort(key=lambda x: parse_h_index(x["revista"].get("h_index", 0)), reverse=True)
 
     return render_template('buscar.html', resultados=resultados, query=query, orden=orden)
 

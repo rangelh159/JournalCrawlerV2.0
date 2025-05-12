@@ -1,21 +1,24 @@
+/* Asegura que el body ocupe toda la altura de la ventana */
 html, body {
-    height: 100%; /* Asegura que el body ocupe el 100% de la altura */
-    margin: 0; /* Elimina el margen predeterminado */
+    height: 100%;
+    margin: 0;
     display: flex;
-    flex-direction: column; /* Coloca el contenido en columnas */
+    flex-direction: column;
 }
 
+/* El contenido principal ocupa el espacio disponible */
 main.container {
-    flex: 1; /* Hace que el contenido principal ocupe el espacio disponible */
+    flex: 1;
 }
 
+/* Footer al final del contenido */
 footer {
     background-color: #1a3163; /* Color del fondo del footer */
     color: white;
     text-align: center;
     padding: 10px 0;
     width: 100%;
-    position: relative; /* Cambia a relativo para que no se superponga */
+    position: relative; /* Cambia a relativo para que no sea fijo */
 }
 
 body {
@@ -76,15 +79,6 @@ body::before {
     border-color: #d29a05;
 }
 
-footer {
-    background-color: #1a3163; /* Color del fondo del footer */
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
 
 h1, h2, h3, h4, h5 {
     font-weight: 900;
@@ -162,4 +156,24 @@ h1, h2, h3, h4, h5 {
     padding: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
+}
+
+.list-group-item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a3163;
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f5ba09;
+    color: white;
+}
+
+#tabla-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

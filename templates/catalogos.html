@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Áreas | JournalCrawler{% endblock %}
+{% block title %}Catálogos | JournalCrawler{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Áreas Disponibles</h2>
+    <h2 class="text-center mb-4">Catálogos Disponibles</h2>
 
-    <!-- Lista de áreas -->
+    <!-- Lista de catálogos -->
     <div class="list-group mb-4">
-        {% for codigo, nombre in AREA_MAP.items() %}
-        <a href="{{ url_for('area') }}?area={{ codigo }}" class="list-group-item list-group-item-action">
-            {{ nombre }}
+        {% for catalogo in catalogos_disponibles %}
+        <a href="{{ url_for('catalogos') }}?catalogo={{ catalogo }}" class="list-group-item list-group-item-action">
+            {{ catalogo }}
         </a>
         {% endfor %}
     </div>
 
     <!-- Tabla de revistas -->
     {% if revistas %}
-    <h3 class="text-center mb-4">Revistas en {{ AREA_MAP[selected_area] }}</h3>
+    <h3 class="text-center mb-4">Revistas en el Catálogo "{{ selected_catalogo }}"</h3>
     <table class="table table-striped table-hover align-middle">
         <thead class="table-dark">
             <tr>
@@ -35,8 +35,8 @@
         </tbody>
     </table>
     {% else %}
-    {% if selected_area %}
-    <p class="text-center text-danger">No se encontraron revistas en esta área.</p>
+    {% if selected_catalogo %}
+    <p class="text-center text-danger">No se encontraron revistas en este catálogo.</p>
     {% endif %}
     {% endif %}
 </div>

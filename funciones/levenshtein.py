@@ -1,3 +1,5 @@
+import Levenshtein
+
 def levenshtein_distance(cadena1, cadena2):
     """
     Calcula la distancia de Levenshtein entre dos cadenas.
@@ -21,6 +23,16 @@ def levenshtein_distance(cadena1, cadena2):
         previous_row = current_row
 
     return previous_row[-1]
+
+def es_similar_levenshtein(titulo1, titulo2, umbral=0.8):
+    """
+    Compara dos títulos usando la distancia de Levenshtein.
+    Devuelve True si la similitud es mayor o igual al umbral.
+    """
+    distancia = Levenshtein.distance(titulo1, titulo2)
+    longitud_maxima = max(len(titulo1), len(titulo2))
+    similitud = 1 - (distancia / longitud_maxima)
+    return similitud >= umbral
 
 if __name__ == "__main__":
     print(levenshtein_distance("journal", "r journal"))  # Debería devolver un valor pequeño

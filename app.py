@@ -168,5 +168,26 @@ def login():
 def equipo():
     return render_template('creditos.html')
 
+@app.route('/explorar')
+def explorar():
+    # Obtener la letra seleccionada de los parámetros de la URL
+    letra = request.args.get('letra', '').upper()
+
+    # Filtrar las revistas que comienzan con la letra seleccionada
+    revistas = []
+    if letra:
+        for revista_id, revista in sistema.revistas.items():
+            if revista.titulo.upper().startswith(letra):
+                revistas.append({
+                    "id": revista.id,
+                    "titulo": revista.titulo,
+                    "catalogos": revista.catalogos,
+                    "areas": revista.areas,
+                    "h_index": revista.h_index
+                })
+
+    # Pasar los datos al template
+    return render_template('explorar.html', revistas=revistas, letra=letra)
+
 if __name__ == '__main__':
     app.run(debug= True)

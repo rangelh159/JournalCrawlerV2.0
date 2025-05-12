@@ -14,7 +14,7 @@ def agregar_titulo_a_json(json_data):
 
 if __name__ == "__main__":
     # Cargar el JSON existente
-    nombre_archivo = "salida_b"  # Nombre del archivo JSON a cargar
+    nombre_archivo = "uni2"  # Nombre del archivo JSON a cargar
     with open(f"../datos/json/{nombre_archivo}.json", "r", encoding="utf-8") as archivo_actualizado:
         json_data = json.load(archivo_actualizado)
 

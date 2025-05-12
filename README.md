@@ -27,7 +27,7 @@ Este proceso automatizado permite actualizar la información sin necesidad de ha
 **Para ejecutar el scraper:**
 1. Abre una terminal y ubícate en la carpeta donde está *scrapper.py*
 2. Ejecuta: python scrapper.py -a "ruta_al_archivo_revistas.json" -p (primer titulo en número) -u (último titulo en número) -o "ruta_al_archivo_de_salida.json"
-       Significado de los parámetros:
+       ****Significado de los parámetros:****
         -a: Archivo de entrada → Ruta al archivo *revistas.json* que contiene la información base sobre las revistas (generado por el csv_to_json.py).
         -p: Primer archivo → Índice (entero) desde donde comenzar el scraping. Por ejemplo, -p 0 inicia desde el principio.
         -u: Último archivo → Índice (entero) desde donde terminar el scraping.

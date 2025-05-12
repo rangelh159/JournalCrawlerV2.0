@@ -116,7 +116,7 @@ class SistemaGestor:
             datos = json.load(archivo) 
             #print(datos)  # Verifica que los datos se carguen correctamente
             for titulo, revista_data in datos.items():
-                print(titulo)   # Itera sobre las claves y valores
+                #print(titulo)   # Itera sobre las claves y valores
                 revista = Revista(titulo)  # Usa la clave como título
                 revista.id = revista_data.get('id', None)
                 revista.areas = revista_data.get('areas', [])

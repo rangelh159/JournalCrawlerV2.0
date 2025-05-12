@@ -19,7 +19,7 @@ AREA_MAP = {
 #Archivo principal de la aplicación Flask
 app = Flask(__name__)
 sistema = jc.SistemaGestor() 
-json_completo= 'datos/json/salida_b_actualizado.json' 
+json_completo= 'datos/json/uni2_actualizado.json' 
 revistas_scrapped = sistema.leer_json(json_completo) 
 
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Inicio | JournalCrawler{% endblock %}
+{% block title %}Buscar | JournalCrawler{% endblock %}
 
 {% block body %}
 <!-- buscar.html -->
@@ -30,32 +30,9 @@
         <tbody>
             {% for revista in resultados %}
             <tr>
-                <!-- Título de la revista con enlace a su detalle -->
-                <td>
-                    <a href="{{ url_for('detalle_revista', revista_id=revista.revista.id) }}" class="text-decoration-none text-primary">
-                        {{ revista.revista.titulo.strip().title() }}
-                    </a>
-                </td>
-        
-                <!-- Catálogos con enlaces -->
-                <td>
-                    {% for catalogo in revista.revista.catalogos %}
-                    <a href="{{ url_for('explorar', letra=catalogo[0].upper()) }}" class="text-decoration-none text-primary">
-                        {{ catalogo }}
-                    </a>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
-        
-                <!-- Áreas con enlaces -->
-                <td>
-                    {% for area in revista['areas_traducidas'] %}
-                    <a href="{{ url_for('area', area=area) }}" class="text-decoration-none text-primary">
-                        {{ area }}
-                    </a>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
-        
-                <!-- H-Index -->
+                <td><a href="{{ url_for('detalle_revista', revista_id=revista.revista.id) }}" class="text-decoration-none text-primary">{{ revista.revista.titulo.strip().title() }}</a></td>
+                <td>{{ revista.revista.catalogos | join(', ') }}</td>
+                <td>{{ revista['areas_traducidas'] | join(', ') }}</td>
                 <td class="text-center">{{ revista.revista.h_index or 'No se encuentra' }}</td>
             </tr>
             {% endfor %}

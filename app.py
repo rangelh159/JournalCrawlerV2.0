@@ -187,7 +187,7 @@ def explorar():
                 })
 
     # Pasar los datos al template
-    return render_template('explorar.html', revistas=revistas, letra=letra)
+    return render_template('explorar.html', revistas=revistas, letra=letra, AREA_MAP=AREA_MAP)
 
 if __name__ == '__main__':
     app.run(debug= True)
